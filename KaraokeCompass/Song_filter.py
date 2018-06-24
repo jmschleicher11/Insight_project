@@ -5,8 +5,9 @@ def filter_songs(song_title, energy, decade):
     
     import pandas as pd
     
-    direct = '/Users/Floreana/Documents/Jobs/Insight/data/'
-    
+    # direct = '/Users/Floreana/Documents/Jobs/Insight/data/'
+    direct = '/home/ubuntu/Insight_files/'    
+
     all_songs = pd.read_pickle(direct + 'full_range_database.pickle')
     karaoke_songs = pd.read_pickle(direct + 'karaoke_range_database.pickle')
     
