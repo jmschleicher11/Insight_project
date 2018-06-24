@@ -78,18 +78,33 @@
         <form action="/output" method="GET">
 		<div class="form-group">
 			<label for="energy">Song Energy: </label>
-          <input type="text" id="energy" name='energy' placeholder="">
-          <div> {{"(Low, Medium, High)"}} </div>
+                  <select name="energy">
+                  <option value=""></option>
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                  </select>
         </div>
         
-        <form action="/output" method="GET">
+         <form action="/output" method="GET">
 		<div class="form-group">
 			<label for="decade">Song Decade: </label>
-          <input type="text" id="decade" name='decade' placeholder="">
-          <div> {{"(1960s, 1970s, 1980s, 1990s, 2000s, 2010s)"}} </div>
+                  <select name="decade">
+                  <option value=""></option>
+                  <option value="1960s">Pre-1970s</option>
+                  <option value="1970s">1970s</option>
+                  <option value="1980s">1980s</option>
+                  <option value="1990s">1990s</option>
+                  <option value="2000s">2000s</option>
+                  <option value="2010s">2010s</option>
+                  </select>
         </div>
 
-
+        <form action="/output" method="GET">
+         <div class="form-group">
+        <input type="checkbox" name="extra_keys" value="1"></input>
+            <label for="extra_keys">Include key-shifted songs</label>
+         </div>
 
         <div>
           <button type="submit" class="btn btn-default btn-lg">Find my songs!</button>

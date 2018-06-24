@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-def filter_songs(song_title, energy, decade):
+def filter_songs(song_title, energy, decade, extra_keys):
     
     import pandas as pd
     
-    # direct = '/Users/Floreana/Documents/Jobs/Insight/data/'
-    direct = '/home/ubuntu/Insight_files/'    
+    direct = '/Users/Floreana/Documents/Jobs/Insight/data/'
+    # direct = '/home/ubuntu/Insight_files/'    
 
     all_songs = pd.read_pickle(direct + 'full_range_database.pickle')
     karaoke_songs = pd.read_pickle(direct + 'karaoke_range_database.pickle')
@@ -25,11 +25,46 @@ def filter_songs(song_title, energy, decade):
     # Get song range information
     low_value = song_info.Low_Value.values[0]
     high_value = song_info.High_Value.values[0]
-
     
-    # Find the songs within the range of the user's song
-    songs_in_range = karaoke_songs.loc[(karaoke_songs.Low_Value >= low_value) & 
-                                       (karaoke_songs.High_Value <= high_value)]
+    keys = {-2: 'A#/Bb', -1: 'B', 0: 'C', 1: 'C#/Bb', 2: 'D', 3: 'D#/Eb', 
+            4: 'E', 5: 'F', 6: 'F#/Gb', 7: 'G', 8: 'G#/Ab', 9: 'A', 
+            10: 'A#/Bb', 11: 'B', 12: 'C', 13: 'C#/Db'}
+
+    if extra_keys is None:
+        # Find the songs within the range of the user's song
+        songs_in_range = karaoke_songs.loc[(karaoke_songs.Low_Value >= 
+                                            low_value) & 
+                                           (karaoke_songs.High_Value <= 
+                                            high_value)]
+    else:
+        songs_in_range = karaoke_songs.loc[(karaoke_songs.Low_Value >= 
+                                            low_value) & 
+                                           (karaoke_songs.High_Value <= 
+                                            high_value)]
+        songs_in_range.loc[:, 'Suggested_key'] = pd.Series('Original Key', 
+                          index=songs_in_range.index)
+
+
+        raise_keys = karaoke_songs.loc[(karaoke_songs.Low_Value + 2 >= 
+                                            low_value) & 
+                                           (karaoke_songs.High_Value + 2 <= 
+                                            high_value)]
+        raise_keys.loc[:, 'Suggested_key'] = pd.Series(
+                raise_keys['key'] - 2).map(keys)
+        
+        lower_keys = karaoke_songs.loc[(karaoke_songs.Low_Value - 2 >= 
+                                            low_value) & 
+                                           (karaoke_songs.High_Value - 2 <= 
+                                            high_value)]
+        lower_keys.loc[:, 'Suggested_key'] = pd.Series(
+                lower_keys['key'] - 2).map(keys)
+        
+        songs_in_range = songs_in_range.append(raise_keys)
+        songs_in_range = songs_in_range.append(lower_keys)
+        
+        songs_in_range = songs_in_range.drop_duplicates(
+                subset={'Artist', 'Song_x'}, keep='first')
+
     
     user_energy = energy.lower()
     user_decade = decade.lower()
@@ -44,17 +79,7 @@ def filter_songs(song_title, energy, decade):
         output = songs_in_range.loc[songs_in_range.energy <= 0.33]
     else:
         output = songs_in_range
-  
-#    # Feeling
-#    if user_feeling == 'upbeat':
-#        output = output.loc[output.valence.values >=0.5]
-#    elif user_feeling == 'downbeat':
-#        output = output.loc[output.valence.values < 0.5]
-#    else: 
-#        output = output
-#        
-#    #print("After Feeling: ", output)
-#        
+        
     # Decade
     if user_decade == '1960s':
         output = output.loc[output.album_date.values < 1970]
@@ -81,3 +106,6 @@ def filter_songs(song_title, energy, decade):
     
     return output
 #    print("You should sing: ", output.Song_x.values)
+
+#test = filter_songs('Hey Jude', 'High', '1980s', '1')
+#print(test)
