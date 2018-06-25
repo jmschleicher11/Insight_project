@@ -45,3 +45,6 @@ def songs_output():
         return render_template("output_extra.html", songs=songs)
   #      return render_template("output_extra.html", songs=songs)
         
+@app.route('/about')
+def about():
+    return render_template("about.html")
