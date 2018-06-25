@@ -15,12 +15,17 @@ def filter_songs(song_title, energy, decade, extra_keys):
     
         song_info = all_songs[all_songs.Song_x.str.lower() == 
                               song_title.lower()]
+        gender = song_info['Gender'].values[0]
+        if gender == 'F':
+            karaoke_songs = karaoke_songs.sort_values(by=['Gender'], 
+                                                      ascending=True)
+        else:
+            karaoke_songs = karaoke_songs.sort_values(by=['Gender'], 
+                                                      ascending=False)
+
     else:
         return 'bad song'
 
-#    if len(song_info) > 1:
-#        print("Which song did you want?")
-#        print()
     
     # Get song range information
     low_value = song_info.Low_Value.values[0]
@@ -64,7 +69,6 @@ def filter_songs(song_title, energy, decade, extra_keys):
         
         songs_in_range = songs_in_range.drop_duplicates(
                 subset={'Artist', 'Song_x'}, keep='first')
-
     
     user_energy = energy.lower()
     user_decade = decade.lower()
@@ -100,12 +104,12 @@ def filter_songs(song_title, energy, decade, extra_keys):
     else:
         output = output
 
-    
     # Removes original song if part of the list
     output = output[-output.Song_x.isin([song_title.upper()])]
-    
-    return output
-#    print("You should sing: ", output.Song_x.values)
+    if len(output) == 0:
+        return 'bad song'
 
-#test = filter_songs('Hey Jude', 'High', '1980s', '1')
+    return output
+
+test = filter_songs('Hey Jude', 'High', '1970s', '1')
 #print(test)

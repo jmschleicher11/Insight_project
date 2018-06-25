@@ -1,13 +1,6 @@
 from flask import render_template, request
-
-from flask_wtf import Form
-from wtforms import BooleanField
-from wtforms.validators import DataRequired
-
 from KaraokeCompass import app
 from KaraokeCompass.Song_filter import filter_songs
-
-import numpy as np
 
 
 @app.route('/')
