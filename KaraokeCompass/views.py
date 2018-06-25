@@ -17,14 +17,23 @@ def songs_output():
     decade = request.args.get('decade')
     extra_keys = request.args.get('extra_keys')
 
-    results = filter_songs(song_title, energy, decade, extra_keys)
-    if type(results) == str:
+    original_song, results = filter_songs(song_title, energy, decade, 
+                                          extra_keys)
+    if results == 1:
         return render_template("error.html")
+    elif results == 2:
+        return render_template("redo.html")
         
     songs = []
+    user_song = []
     string = "https://open.spotify.com/embed?uri="
 	
-    if extra_keys is None:
+    
+    url = string + user_song.iloc[0]['uri'] + "&theme=white"
+    user_song.append(dict(Song=user_song.iloc[0]['Song_x'], 
+                          Artist=results.iloc[0]['Artist'], uri=url))
+
+    if extra_keys is None:        
     
         for i in range(len(results)):
             url = string + results.iloc[i]['uri'] + "&theme=white"
@@ -42,8 +51,8 @@ def songs_output():
                               Suggested_key = results.iloc[i]['Suggested_key'], 
                               uri=url))
         
-        return render_template("output_extra.html", songs=songs)
-  #      return render_template("output_extra.html", songs=songs)
+        return render_template("output_extra.html", songs=songs, 
+                               user_song=user_song)
         
 @app.route('/about')
 def about():

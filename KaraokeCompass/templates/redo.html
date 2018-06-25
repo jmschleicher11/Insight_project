@@ -42,12 +42,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-        <a class="navbar-brand" href="/">Karaoke Compass</a>
+          <a class="navbar-brand" href="/">Karaoke Compass</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li><a href="/about">About</a></li>
-            
 <!--
             <li><a href="#contact">Contact</a></li>
 -->
@@ -61,11 +60,10 @@
 <div class="container">
 
 	<div class="starter-template">
-		<h2>Input Page</h2>
-		<p>Put in a song you like to sing</p>
+		<h2>Oops!</h2>
+		<p>Sorry, no songs match your specifications. Please broaden your search!</p>
 	</div>
-    
-    
+
 	<form action="/output" method="GET">
 		<div class="form-group">
 			<label for="song_title">Song Title: </label>
@@ -98,14 +96,13 @@
                   <option value="2010s">2010s</option>
                   </select>
         </div>
-
+        
         <form action="/output" method="GET">
          <div class="form-group">
         <input type="checkbox" name="extra_keys" value="1"></input>
             <label for="extra_keys">Include key-shifted songs</label>
          </div>
-         
-         
+
         <div>
           <button type="submit" class="btn btn-default btn-lg">Find my songs!</button>
         </div>

@@ -24,7 +24,8 @@ def filter_songs(song_title, energy, decade, extra_keys):
                                                       ascending=False)
 
     else:
-        return 'bad song'
+        return 0, 1
+    # Error code 1 = song isn't in database
 
     
     # Get song range information
@@ -107,9 +108,10 @@ def filter_songs(song_title, energy, decade, extra_keys):
     # Removes original song if part of the list
     output = output[-output.Song_x.isin([song_title.upper()])]
     if len(output) == 0:
-        return 'bad song'
+        return 0, 2
+    # Error code 2: song doens't have any matches
 
-    return output
+    return song_info, output
 
-test = filter_songs('Hey Jude', 'High', '1970s', '1')
+original_song, results = filter_songs('Hey Jude', 'High', '1970s', '1')
 #print(test)
