@@ -62,6 +62,26 @@
     <div class="starter-template">
         <h2>Results</h2>
         
+        
+    </div> <!-- /.container-->
+
+    <div class="container">
+      <div class="starter-template">
+      
+        <p class="lead">Here was your original song<br> </p>
+        
+    </div>
+
+      <table class="table table-hover">
+      <tr><th>Song Title</th><th>Artist</th><th>Suggested Key</th><th>Listen</th></tr>
+      <tr><td>{{ user_song['Song'] }}</td><td>{{ user_song['Artist'] }}</td><td><iframe src = {{ user_song['uri'] }} ></iframe></td></tr>
+      </table>
+        
+   </div> <!-- /.container-->
+
+        
+        
+        
   </div> <!-- /.container-->
 
     <div class="container">

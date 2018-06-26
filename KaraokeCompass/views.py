@@ -19,30 +19,37 @@ def songs_output():
 
     original_song, results = filter_songs(song_title, energy, decade, 
                                           extra_keys)
-    if results == 1:
-        return render_template("error.html")
-    elif results == 2:
-        return render_template("redo.html")
-        
-    songs = []
-    user_song = []
+
+    if isinstance(results, int):
+        if results == 1:
+            return render_template("error.html")
+        elif results == 2:
+            return render_template("redo.html")
+
     string = "https://open.spotify.com/embed?uri="
-	
-    
-    url = string + user_song.iloc[0]['uri'] + "&theme=white"
-    user_song.append(dict(Song=user_song.iloc[0]['Song_x'], 
-                          Artist=results.iloc[0]['Artist'], uri=url))
+
+
+    songs = []
 
     if extra_keys is None:        
     
+        url = string + original_song['uri'].values[0] + "&theme=white"
+        user_song = dict(Song=original_song['Song_x'].values[0], 
+                         Artist=original_song['Artist'].values[0], uri=url)
+        
         for i in range(len(results)):
             url = string + results.iloc[i]['uri'] + "&theme=white"
             songs.append(dict(Song=results.iloc[i]['Song_x'], 
                               Artist=results.iloc[i]['Artist'], uri=url))
     
-        return render_template("output.html", songs=songs)
+        return render_template("output.html", songs=songs, user_song=user_song)
 
     else:
+        
+        url = string + original_song['uri'].values[0] + "&theme=white"
+        user_song = dict(Song=original_song['Song_x'].values[0], 
+                     Artist=original_song['Artist'].values[0], 
+                     Suggested_key='Original Key', uri=url)
         
         for i in range(len(results)):
             url = string + results.iloc[i]['uri'] + "&theme=white"

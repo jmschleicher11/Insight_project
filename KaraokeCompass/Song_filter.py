@@ -113,5 +113,5 @@ def filter_songs(song_title, energy, decade, extra_keys):
 
     return song_info, output
 
-original_song, results = filter_songs('Hey Jude', 'High', '1970s', '1')
+original_song, results = filter_songs('hey Jude', 'High', '1970s', '1')
 #print(test)
