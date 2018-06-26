@@ -33,29 +33,43 @@ def songs_output():
 
     if extra_keys is None:        
     
+        # User's song information
         url = string + original_song['uri'].values[0] + "&theme=white"
         user_song = dict(Song=original_song['Song_x'].values[0], 
-                         Artist=original_song['Artist'].values[0], uri=url)
-        
+                         Artist=original_song['Artist'].values[0], 
+                         Low_note=original_song['New_Low_Note'].values[0], 
+                         High_note=original_song['New_High_Note'].values[0], 
+                         uri=url)
+        # Results song information
         for i in range(len(results)):
             url = string + results.iloc[i]['uri'] + "&theme=white"
             songs.append(dict(Song=results.iloc[i]['Song_x'], 
-                              Artist=results.iloc[i]['Artist'], uri=url))
+                              Artist=results.iloc[i]['Artist'], 
+                              Low_note=results.iloc[i]['New_Low_Note'], 
+                              High_note=results.iloc[i]['New_High_Note'],
+                              uri=url))
     
         return render_template("output.html", songs=songs, user_song=user_song)
 
     else:
-        
+            
+        # User's song information
         url = string + original_song['uri'].values[0] + "&theme=white"
         user_song = dict(Song=original_song['Song_x'].values[0], 
                      Artist=original_song['Artist'].values[0], 
-                     Suggested_key='Original Key', uri=url)
+                     Suggested_key='Original Key', 
+                     Low_note=original_song['New_Low_Note'].values[0], 
+                     High_note=original_song['New_High_Note'].values[0], 
+                     uri=url)
         
+        # Results song information
         for i in range(len(results)):
             url = string + results.iloc[i]['uri'] + "&theme=white"
             songs.append(dict(Song=results.iloc[i]['Song_x'], 
                               Artist=results.iloc[i]['Artist'], 
                               Suggested_key = results.iloc[i]['Suggested_key'], 
+                              Low_note=results.iloc[i]['New_Low_Note'], 
+                              High_note=results.iloc[i]['New_High_Note'], 
                               uri=url))
         
         return render_template("output_extra.html", songs=songs, 

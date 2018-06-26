@@ -80,8 +80,8 @@
     </div>
 
       <table class="table table-hover">
-      <tr><th>Song Title</th><th>Artist</th><th>Suggested Key</th><th>Listen</th></tr>
-      <tr><td>{{ user_song['Song'] }}</td><td>{{ user_song['Artist'] }}</td><td>{{ user_song['Suggested_key'] }}</td><td><iframe src = {{ user_song['uri'] }} ></iframe></td></tr>
+      <tr><th>Song Title</th><th>Artist</th><th>Suggested Key</th><th>Vocal Range (Middle C=C4)</th><th>Listen</th></tr>
+      <tr><td>{{ user_song['Song'] }}</td><td>{{ user_song['Artist'] }}</td><td>{{ user_song['Suggested_key'] }}</td><td>{{ user_song['Low_note'] }} - {{ user_song['High_note'] }}</td><td><iframe src = {{ user_song['uri'] }} ></iframe></td></tr>
       </table>
         
    </div> <!-- /.container-->
@@ -94,9 +94,9 @@
     </div>
 
       <table class="table table-hover">
-      <tr><th>Song Title</th><th>Artist</th><th>Suggested Key</th><th>Listen</th></tr>
+      <tr><th>Song Title</th><th>Artist</th><th>Suggested Key</th><th>Vocal Range (Middle C=C4)</th><th>Listen</th></tr>
       {% for song in songs %}
-      <tr><td>{{ song['Song'] }}</td><td>{{ song['Artist'] }}</td><td>{{ song['Suggested_key'] }}</td><td><iframe src = {{ song['uri'] }} ></iframe></td></tr>
+      <tr><td>{{ song['Song'] }}</td><td>{{ song['Artist'] }}</td><td>{{ song['Suggested_key'] }}</td><td>{{ song['Low_note'] }} - {{ song['High_note'] }}</td><td><iframe src = {{ song['uri'] }} ></iframe></td></tr>
       {% endfor %}
       </table>
 

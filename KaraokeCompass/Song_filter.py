@@ -1,15 +1,44 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+def fix_male_notes(df, column):
+    # Need to correct for male vocal ranges being shifted up an octave
+    new_notes = []
+    for i in range(len(df)):
+        
+        if df['Gender'].iloc[i] == 'M':
+            new_notes.append( df[column].iloc[i][:-1] +
+             str(int(df[column].iloc[i][-1])-1))
+        else:
+            new_notes.append(df[column].iloc[i])
+    
+    return new_notes
+
+
 def filter_songs(song_title, energy, decade, extra_keys):
     
     import pandas as pd
+    import numpy as np
     
     direct = '/Users/Floreana/Documents/Jobs/Insight/data/'
     # direct = '/home/ubuntu/Insight_files/'    
 
     all_songs = pd.read_pickle(direct + 'full_range_database.pickle')
     karaoke_songs = pd.read_pickle(direct + 'karaoke_range_database.pickle')
+
+    all_songs['New_Low_Note'] = fix_male_notes(all_songs, 'Low_Note')
+    all_songs['New_High_Note'] = fix_male_notes(all_songs, 'High_Note')    
+    karaoke_songs['New_Low_Note'] = fix_male_notes(karaoke_songs, 'Low_Note')
+    karaoke_songs['New_High_Note'] = fix_male_notes(karaoke_songs, 'High_Note')    
+    
+    new_notes = []
+    for i in range(len(all_songs)):
+        
+        if all_songs['Gender'].iloc[i] == 'M':
+            new_notes.append( all_songs['Low_Note'].iloc[i][:-1] +
+             str(int(all_songs['Low_Note'].iloc[i][-1])-1))
+        else:
+            new_notes.append(all_songs['Low_Note'].iloc[i])
     
     if any(all_songs.Song_x.isin([song_title.upper()])):
     
