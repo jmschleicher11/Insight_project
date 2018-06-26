@@ -144,3 +144,17 @@ def filter_songs(song_title, energy, decade, extra_keys):
 
 original_song, results = filter_songs('hey Jude', 'High', '1970s', '1')
 #print(test)
+
+def song_listing():
+    
+    import pandas as pd
+    
+    direct = '/Users/Floreana/Documents/Jobs/Insight/data/'
+    # direct = '/home/ubuntu/Insight_files/'    
+
+    all_songs = pd.read_pickle(direct + 'full_range_database.pickle')
+    
+    song_artist = all_songs[['Song_x', 'Artist']]
+    
+    return song_artist
+    

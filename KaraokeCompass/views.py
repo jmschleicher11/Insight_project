@@ -1,6 +1,6 @@
 from flask import render_template, request
 from KaraokeCompass import app
-from KaraokeCompass.Song_filter import filter_songs
+from KaraokeCompass.Song_filter import filter_songs, song_listing
 
 
 @app.route('/')
@@ -78,3 +78,15 @@ def songs_output():
 @app.route('/about')
 def about():
     return render_template("about.html")
+
+@app.route('/songs')
+def songs():
+    
+    song_list = song_listing()
+    
+    songs=[]
+    for i in range(len(song_list)):
+        songs.append(dict(Song=song_list.iloc[i]['Song_x'],
+                          Artist=song_list.iloc[i]['Artist']))
+    
+    return render_template("songs_list.html", songs=songs)
