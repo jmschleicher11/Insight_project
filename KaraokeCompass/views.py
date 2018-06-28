@@ -83,6 +83,7 @@ def about():
 def songs():
     
     song_list = song_listing()
+    song_list = song_list.sort_values(by=['Artist'], ascending=True)
     
     songs=[]
     for i in range(len(song_list)):
